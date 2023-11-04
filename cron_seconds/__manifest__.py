@@ -8,15 +8,16 @@
     """,
     "version": "16.0.1.0.0",
     "author": "Yiğit Budak",
-    "images": ["static/description/banner.png"],
     "website": "https://github.com/yibudak/best-odoo-addons",
     "license": "LGPL-3",
-    "category": "Tools",
     "depends": [
         "base",
     ],
     "data": [],
     "installable": True,
+    # Marketplace metadata #
+    "images": ["static/description/banner.png"],
     "price": 10.00,
     "currency": "EUR",
+    "category": "Tools",
 }

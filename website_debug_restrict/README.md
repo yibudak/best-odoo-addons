@@ -3,7 +3,7 @@
 
 You can purchase this module from Odoo Apps Store to support our work and maintenance.
 
-[![Alt text](https://img.shields.io/badge/Odoo%20Apps%20Store-714b67?style=for-the-badge)](https://apps.odoo.com/apps/modules/16.0/website_debug_restrict/)
+[![Odoo Apps Store](https://img.shields.io/badge/Odoo%20Apps%20Store-714b67?style=for-the-badge)](https://apps.odoo.com/apps/modules/16.0/website_debug_restrict/)
 
 # Website Debug Restrict
 

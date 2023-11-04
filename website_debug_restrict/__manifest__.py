@@ -15,5 +15,5 @@
     "images": ["static/description/banner.png"],
     "price": 10.00,
     "currency": "EUR",
-    "category": "Extensions",
+    "category": "Website",
 }
