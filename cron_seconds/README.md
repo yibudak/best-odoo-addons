@@ -10,11 +10,6 @@ This module adds the ability to run Scheduled Actions in seconds.
 
 - Adds second selection to "Scheduled Actions".
 
-[//]: # (## Dependencies:)
-
-[//]: # ()
-[//]: # (- [DEPENDENCY_NAME] &#40;Install via: `pip install [DEPENDENCY_INSTALL_COMMAND]`&#41;)
-
 ## Installation:
 
 1. Clone this repository.
