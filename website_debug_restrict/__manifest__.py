@@ -12,6 +12,7 @@
         "security/res_users.xml",
     ],
     "installable": True,
+    # Odoo Apps Store Specific #
     "images": ["static/description/banner.png"],
     "price": 10.00,
     "currency": "EUR",
