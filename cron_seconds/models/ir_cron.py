@@ -16,5 +16,4 @@ class IrCron(models.Model):
 
     interval_type = fields.Selection(
         selection_add=[("seconds", "Seconds")],
-        ondelete={"seconds": "set default"},
     )
