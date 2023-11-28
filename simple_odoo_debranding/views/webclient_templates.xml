@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+    <template id="debranding_replace_title" inherit_id="web.layout" name="Odoo Debranding Replace Title">
+
+        <!-- Change the default title -->
+        <xpath expr="//title" position="replace">
+            <title><t t-esc="request.env['website'].search([], limit=1).name or 'Odoo'"/></title>
+        </xpath>
+
+        <!-- Change the default favicon -->
+<!--        <xpath expr="//link[@rel='shortcut icon']" position="replace">-->
+<!--            <t t-set="website1" t-value="request.env['website'].search([], limit=1)"/>-->
+<!--            <link type="image/x-icon" rel="shortcut icon" t-att-href="website1.image_url(website1, 'favicon') or '/web/static/img/favicon.ico'"/>-->
+<!--        </xpath>-->
+
+    </template>
+    </data>
+</odoo>
