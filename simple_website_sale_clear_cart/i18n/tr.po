@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_sale_clear_cart_fork
+# 	* simple_website_sale_clear_cart
 #
 msgid ""
 msgstr ""
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: website_sale_clear_cart_fork
-#: model_terms:ir.ui.view,arch_db:website_sale_clear_cart_fork.website_sale_clear_cart_fork
+#. module: simple_website_sale_clear_cart
+#: model_terms:ir.ui.view,arch_db:simple_website_sale_clear_cart.simple_website_sale_clear_cart
 msgid ""
 "<i class=\"fa fa-trash\"/> <span class=\"d-none d-md-inline\">Clear "
 "Cart</span>"

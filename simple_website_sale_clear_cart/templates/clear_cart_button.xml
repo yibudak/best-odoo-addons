@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="website_sale_clear_cart_fork" inherit_id="website_sale.cart"
+    <template id="simple_website_sale_clear_cart" inherit_id="website_sale.cart"
               name="Website Sale Clear Cart Button">
         <xpath expr="//div[@class='d-flex justify-content-between']/div"
                position="inside">

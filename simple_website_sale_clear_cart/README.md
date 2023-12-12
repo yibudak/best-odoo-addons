@@ -3,7 +3,7 @@
 
 You can purchase this module from Odoo Apps Store to support our work and maintenance.
 
-[![Odoo Apps Store](https://img.shields.io/badge/Odoo%20Apps%20Store-714b67?style=for-the-badge)](https://apps.odoo.com/apps/modules/16.0/website_sale_clear_cart_fork/)
+[![Odoo Apps Store](https://img.shields.io/badge/Odoo%20Apps%20Store-714b67?style=for-the-badge)](https://apps.odoo.com/apps/modules/16.0/simple_website_sale_clear_cart/)
 
 # Website Sale Clear Cart
 
@@ -13,7 +13,7 @@ This module adds a clear cart button to the website cart page.
 
 1. Clone this repository.
 2. Add this directory to your addons path (e.g. `--addons-path=addons,path/to/this/repo`).
-3. Install the module `website_sale_clear_cart_fork`.
+3. Install the module `simple_website_sale_clear_cart`.
 
 ## Authors:
 
