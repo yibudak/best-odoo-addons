@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+
+    <template id="portal_breadcrumb_address_inherit" inherit_id="portal.portal_breadcrumbs" name="Address Management">
+		<xpath expr="//ol" position="inside">
+			<li t-if="page_name == 'my_addresses'" class="breadcrumb-item">My Addresses</li>
+		</xpath>
+	</template>
+
+    <template id="my_addresses">
+        <t t-call="portal.portal_layout">
+			<t t-set="page_name">my_addresses</t>
+			<t t-set="additional_title">Address Management</t>
+			<div class="row oe_website_sale">
+				<div class="col-12 col-xl order-xl-1 oe_cart">
+					<div class="row all_shipping">
+						<div class="col-lg-12">
+							<h5 class="o_page_header mt16 mb4">Billing Address</h5>
+							<div class="row mt8">
+<!--								<div class="col-md-12 col-lg-12 one_kanban">-->
+<!--									<form action="/my/address/manage" method="post">-->
+<!--										<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
+<!--										<input type="hidden" name="addr_mode" t-att-value="('new', 'billing')"/>-->
+<!--										<input type="hidden" name="partner_id" t-att-value="partner_id.id"/>-->
+<!--										<a role="button" href="#" type="submit" class="btn btn-secondary mb16 btn-block">-->
+<!--											<i class="fa fa-plus-square"/>-->
+<!--											<span>Add an address</span>-->
+<!--										</a>-->
+<!--									</form>-->
+<!--								</div>-->
+								<div class="col-md-12 col-lg-6 one_kanban">
+									<t t-call="website_sale.address_kanban">
+										<t t-set="contact" t-value="partner_id"/>
+										<t t-set="readonly" t-value="True"/>
+										<t t-set="address_management" t-value="True"/>
+									</t>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<h5 class="o_page_header mt16 mb4">Shipping Address</h5>
+						</div>
+					</div>
+					<div class="row all_shipping">
+						<div class="col-lg-12">
+							<div class="row mt8">
+									<t t-foreach="shipping_address_ids" t-as="ship">
+										<div class="col-md-12 col-lg-6 one_kanban py-2">
+											<t t-call="website_sale.address_kanban">
+												<t t-set="contact" t-value="ship"/>
+												<t t-set="readonly" t-value="True"/>
+												<t t-set="address_management" t-value="True"/>
+											</t>
+										</div>
+									</t>
+								<div class="col-md-12 col-lg-6 justify-content-center d-flex align-items-center">
+									<form action="/my/address/manage" method="post" class="">
+										<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+<!--										<input type="hidden" name="addr_mode" t-att-value="('new', 'shipping')"/>-->
+<!--										<input type="hidden" name="partner_id" t-att-value="partner_id.id"/>-->
+										<button role="button" type="submit" href="#" class="btn btn-lg btn-secondary mb16 btn-block">
+											<i class="fa fa-plus-square"/>
+											<span>Add an address</span>
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</t>
+	</template>
+
+    <template id="portal_my_addresses" name="Address" customize_show="True" inherit_id="portal.portal_my_home" priority="1">
+		<!-- Add addresses to my portal -->
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My Addresses</t>
+                <t t-set="url" t-value="'/my/address'"/>
+                <t t-set="placeholder_count" t-value="'address_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+	<template id="address_management_website_sale_inherit" name="Address Page Inherit" inherit_id="website_sale.address">
+		<!-- Remove sale related views when adding new address from my account page -->
+		<xpath expr="//t[@t-call='website_sale.wizard_checkout']" position="attributes">
+			<attribute name="t-if">not address_management</attribute>
+		</xpath>
+		<xpath expr="//t[@t-call='website_sale.cart_summary']" position="attributes">
+			<attribute name="t-if">not address_management</attribute>
+		</xpath>
+
+		<!-- Change form action related to address_management -->
+		<xpath expr="//form" position="attributes">
+			<attribute name="action"></attribute>
+			<attribute name="t-att-action">"/my/address/manage" if address_management else "/shop/checkout"</attribute>
+		</xpath>
+
+		<!-- Address form footer buttons href changes -->
+		<xpath expr="//div[hasclass('d-flex', 'justify-content-between')]" position="replace">
+			<t t-if="not address_management">
+				<div class="d-flex justify-content-between">
+					<a role="button" t-att-href="mode == ('new', 'billing') and '/shop/cart' or '/shop/checkout'" class="btn btn-secondary mb32">
+						<i class="fa fa-chevron-left"/>
+						<span>Back</span>
+					</a>
+					<a role="button" href="#" class="btn btn-primary mb32 a-submit a-submit-disable a-submit-loading">
+						<span>Next</span>
+						<i class="fa fa-chevron-right"/>
+					</a>
+				</div>
+			</t>
+			<t t-else="">
+				<div class="d-flex justify-content-between">
+					<a role="button" t-att-href="'/my/address'" class="btn btn-secondary mb32">
+						<i class="fa fa-chevron-left"/>
+						<span>Back</span>
+					</a>
+					<a role="button" href="#" class="btn btn-primary mb32 a-submit a-submit-disable a-submit-loading">
+						<span>Save</span>
+						<i class="fa fa-chevron-right"/>
+					</a>
+				</div>
+			</t>
+		</xpath>
+
+
+	</template>
+
+	<template id="address_kanban_inherit" name="Address Kanban Inherit" inherit_id="website_sale.address_kanban">
+		<!-- Allow Edit on Everywhere -->
+		<xpath expr="//a[@t-if='allow_edit']" position="attributes">
+			<attribute name="t-if">1==1</attribute>
+		</xpath>
+
+		<!-- Add delete button -->
+		<xpath expr="//div[hasclass('card-body')]/a" position="after">
+			<t t-if="request.env.user.sudo().partner_id.id != contact.id and (website and not website.is_public_user())">
+				<a href="#"
+				   class="a-delete btn btn-link float-end p-0 no-decoration mx-3"
+				   title="Delete this address">
+					<i class='fa fa-trash'/>
+				</a>
+			</t>
+		</xpath>
+
+		<xpath expr="//input[@name='partner_id']" position="after">
+			<input type="hidden" name="address_management" t-att-value="1" />
+		</xpath>
+<!--		<xpath expr="//form" position="attributes">-->
+<!--			<attribute name="action"></attribute>-->
+<!--			<attribute name="t-att-action">"/my/address/manage" if address_management else "/shop/checkout"</attribute>-->
+<!--		</xpath>-->
+
+	</template>
+
+</odoo>
