@@ -51,7 +51,15 @@ class WebsiteSaleInherit(WebsiteSale):
     )
     def address_invoice(self, **kw):
         Partner = request.env["res.partner"].with_context(show_address=1).sudo()
-        order = request.website.sale_get_order()
+        current_partner = request.env.user.partner_id
+        order = request.website.sale_get_order(force_create=True)
+        # dummy_order = None
+        # if not order:
+        #     dummy_order = request.env["sale.order"].sudo().create(
+        #         {"partner_id": current_partner.id}
+        #     )
+        #     order = dummy_order
+        #     request.session.sale_order_id = order.id
 
         # redirection = self.checkout_redirection(order)
         # if redirection:
@@ -82,14 +90,19 @@ class WebsiteSaleInherit(WebsiteSale):
                         partner_id = -1
                     elif partner_id in shippings.mapped("id"):
                         mode = ("edit", "shipping")
+                    elif partner_id == current_partner.id:
+                        mode = ("edit", "billing")
+                        can_edit_vat = current_partner.can_edit_vat()
                     else:
+                        # if dummy_order:
+                        #     dummy_order.unlink()
                         return Forbidden()
                 if mode and partner_id != -1:
                     values = Partner.browse(partner_id)
             elif partner_id == -1:
                 mode = ("new", "shipping")
             else:  # no mode - refresh without post?
-                return request.redirect("/shop/checkout")
+                return request.redirect("/my/address/manage")
 
         # IF POSTED
         if "submitted" in kw and request.httprequest.method == "POST":
@@ -103,6 +116,8 @@ class WebsiteSaleInherit(WebsiteSale):
                 errors["error_message"] = error_msg
                 values = kw
             else:
+                # if mode[1] == 'shipping' and not post.get('parent_id'):
+                #     post['parent_id'] = current_partner.id
                 partner_id = self._checkout_form_save(mode, post, kw)
                 # We need to validate _checkout_form_save return, because when partner_id not in shippings
                 # it returns Forbidden() instead the partner_id
@@ -139,6 +154,8 @@ class WebsiteSaleInherit(WebsiteSale):
                     (3, request.website.partner_id.id),
                 ]
                 if not errors:
+                    # if dummy_order:
+                    #     dummy_order.unlink()
                     return request.redirect("/my/address")
 
         render_values = {
