@@ -30,6 +30,11 @@ class WebsiteAddressManagement(http.Controller):
             address = request.env["res.partner"].browse(address_id)
             if address in partner.shipping_address_ids and address != partner:
                 address.sudo().write({"active": False})
+                # Set the first address as shipping address
+                # if deleted address is the current shipping address.
+                order = request.website.sale_get_order()
+                if order and order.partner_shipping_id == address:
+                    order.partner_shipping_id = partner.id
             return True
         else:
             return False

@@ -98,7 +98,7 @@
 		<!-- Change form action related to address_management -->
 		<xpath expr="//form" position="attributes">
 			<attribute name="action"></attribute>
-			<attribute name="t-att-action">"/my/address/manage" if address_management else "/shop/checkout"</attribute>
+			<attribute name="t-att-action">"/my/address/manage" if address_management else "/shop/address"</attribute>
 		</xpath>
 
 		<!-- Address form footer buttons href changes -->
@@ -150,7 +150,7 @@
 		</xpath>
 
 		<xpath expr="//input[@name='partner_id']" position="after">
-			<input type="hidden" name="address_management" t-att-value="1" />
+			<input t-if="address_management" type="hidden" name="address_management" t-att-value="1" />
 		</xpath>
 <!--		<xpath expr="//form" position="attributes">-->
 <!--			<attribute name="action"></attribute>-->
