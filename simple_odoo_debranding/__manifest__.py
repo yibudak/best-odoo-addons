@@ -4,7 +4,7 @@
     "name": "Simple Odoo Debranding",
     "summary": "Hide Odoo and Odoo Enterprise from backend",
     "version": "16.0.1.0.1",
-    "author": "Yiğit Budak",
+    "author": "Ahmet Yiğit Budak",
     "license": "AGPL-3",
     "website": "https://github.com/yibudak/best-odoo-addons",
     "depends": ["base", "web", "website"],

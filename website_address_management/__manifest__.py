@@ -4,7 +4,7 @@
     "name": "Website Address Management",
     "summary": "Manage all the addresses in a single window.",
     "version": "16.0.1.0.1",
-    "author": "Yiğit Budak",
+    "author": "Ahmet Yiğit Budak",
     "license": "AGPL-3",
     "website": "https://github.com/yibudak/best-odoo-addons",
     "depends": ["website", "website_sale"],

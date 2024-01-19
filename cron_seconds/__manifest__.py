@@ -7,7 +7,7 @@
     This module adds the ability to run cron jobs in seconds.
     """,
     "version": "16.0.1.0.0",
-    "author": "Yiğit Budak",
+    "author": "Ahmet Yiğit Budak",
     "website": "https://github.com/yibudak/best-odoo-addons",
     "license": "LGPL-3",
     "depends": [

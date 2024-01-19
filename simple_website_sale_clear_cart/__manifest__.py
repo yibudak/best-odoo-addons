@@ -4,7 +4,7 @@
     "name": "Website Sale Clear Cart Button",
     "summary": "Clear all the cart content with single click",
     "version": "16.0.1.0.1",
-    "author": "Yiğit Budak",
+    "author": "Ahmet Yiğit Budak",
     "license": "AGPL-3",
     "website": "https://github.com/yibudak/best-odoo-addons",
     "depends": ["website", "website_sale"],
