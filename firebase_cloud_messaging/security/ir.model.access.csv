@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fcm_device_manager,Notification Manager,firebase_cloud_messaging.model_fcm_device,firebase_cloud_messaging.group_fcm_manager,1,1,1,1
+access_fcm_device_user,Notification User,firebase_cloud_messaging.model_fcm_device,firebase_cloud_messaging.group_fcm_user,1,0,0,0
+access_fcm_message_manager,Notification Manager,firebase_cloud_messaging.model_fcm_message,firebase_cloud_messaging.group_fcm_manager,1,1,1,1
+access_fcm_message_user,Notification User,firebase_cloud_messaging.model_fcm_message,firebase_cloud_messaging.group_fcm_user,1,0,0,0
+access_fcm_server_manager,Notification Manager,firebase_cloud_messaging.model_fcm_server,firebase_cloud_messaging.group_fcm_manager,1,1,1,1
+access_fcm_server_user,Notification User,firebase_cloud_messaging.model_fcm_server,firebase_cloud_messaging.group_fcm_user,1,0,0,0

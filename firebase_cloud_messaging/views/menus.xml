@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- ROOT MENU -->
+    <menuitem
+            id="menu_firebase_cloud_messaging_root"
+            name="Push Notifications"
+            web_icon="firebase_cloud_messaging,static/src/description/icon.png"
+            groups="firebase_cloud_messaging.group_fcm_manager"
+    />
+
+    <!-- FCM Messages  -->
+    <menuitem id="menu_fcm_message"
+              name="Messages"
+              action="action_fcm_message"
+              parent="menu_firebase_cloud_messaging_root"/>
+
+    <!-- FCM Devices  -->
+    <menuitem id="menu_fcm_device"
+              name="Devices"
+              action="action_fcm_device"
+              parent="menu_firebase_cloud_messaging_root"/>
+
+    <!-- FCM Servers  -->
+    <menuitem id="menu_fcm_server"
+              name="Servers"
+              action="action_fcm_server"
+              parent="menu_firebase_cloud_messaging_root"/>
+</odoo>

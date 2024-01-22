@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_fcm_message_form" model="ir.ui.view">
+        <field name="name">fcm.message.form</field>
+        <field name="model">fcm.message</field>
+        <field name="arch" type="xml">
+            <form string="FCM Message">
+                <header>
+                    <button name="action_send_message" string="Send Notification" type="object" class="oe_highlight" />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="title" />
+                        <field name="body" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fcm_message_tree" model="ir.ui.view">
+        <field name="name">fcm.message.tree</field>
+        <field name="model">fcm.message</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="title" />
+                <field name="body" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_fcm_message" model="ir.actions.act_window">
+        <field name="name">FCM Message</field>
+        <field name="res_model">fcm.message</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="firebase_cloud_messaging.view_fcm_message_tree" />
+    </record>
+
+</odoo>
