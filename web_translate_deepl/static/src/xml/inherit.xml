@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+
+    <t t-extend="TranslateDialog">
+
+        <!-- Translate all buttons -->
+        <t t-jquery=".oe_translation_form" t-operation="before">
+            <button t-if="widget.deepl_enabled" class="btn oe_button btn-primary oe_translate_all_btn mb-3">
+                <span>Translate All</span>
+            </button>
+        </t>
+
+        <!-- Adds translate button on single field. -->
+        <t t-jquery=".oe_form_frame_cell" t-operation="append">
+            <td t-if="widget.deepl_enabled and widget.user_lang != lg.code and lg.tr_base_lang_id">
+                <button class="btn oe_button btn-primary oe_translate_btn mb-1" t-attf-data-lang="#{lg.code}" t-att-data-field-type="field.type">
+                    <span>Translate</span>
+                </button>
+            </td>
+        </t>
+
+        <t t-jquery=".oe_translation_field" t-operation="attributes">
+            <attribute name="t-attf-data-lang">#{lg.id}</attribute>
+            <attribute name="t-attf-data-base-tr-lang">#{lg.tr_base_lang_id[0] or ''}</attribute>
+        </t>
+
+    </t>
+
+</template>
