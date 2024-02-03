@@ -7,7 +7,7 @@
     This module allows you to translate any fields in web dialog using DeepL API.
     """,
     "version": "12.0.1.0.0",
-    "author": "Yiğit Budak",
+    "author": "Ahmet Yiğit Budak",
     "website": "https://github.com/yibudak/best-odoo-addons",
     "license": "AGPL-3",
     "depends": ["web_translate_dialog"],

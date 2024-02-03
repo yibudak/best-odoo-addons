@@ -36,7 +36,7 @@ This module adds new features to web_translate_dialog module. It allows you to t
 
 ## Authors:
 
-- [Yiğit Budak](https://github.com/yibudak)
+- [Ahmet Yiğit Budak](https://github.com/yibudak)
 
 ## Contribution:
 
