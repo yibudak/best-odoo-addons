@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_deepl_account_form" model="ir.ui.view">
+        <field name="name">deepl.account.form</field>
+        <field name="model">deepl.account</field>
+        <field name="arch" type="xml">
+            <form string="DeepL Account">
+                <header>
+                    <button name="action_test_connection" string="Test API" type="object" class="btn-primary" />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="auth_key" />
+                        <field name="formality" />
+                        <field name="translation_context" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_deepl_account_tree" model="ir.ui.view">
+        <field name="name">deepl.account.tree</field>
+        <field name="model">deepl.account</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="auth_key" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_deepl_accounts" model="ir.actions.act_window">
+        <field name="name">DeepL Accounts</field>
+        <field name="res_model">deepl.account</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="web_translate_deepl.view_deepl_account_tree" />
+    </record>
+
+</odoo>
