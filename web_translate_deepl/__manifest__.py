@@ -9,7 +9,7 @@
     "version": "12.0.1.0.0",
     "author": "Yiğit Budak",
     "website": "https://github.com/yibudak/best-odoo-addons",
-    "license": "LGPL-3",
+    "license": "AGPL-3",
     "depends": ["web_translate_dialog"],
     "external_dependencies": {"python": ["requests"]},
     "data": [
