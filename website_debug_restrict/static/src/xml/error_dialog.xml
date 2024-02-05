@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+    <t t-name="website_debug_restrict.ErrorDialog" t-inherit="web.ErrorDialog" t-inherit-mode="extension" owl="1">
+        <xpath expr="//Dialog" position="attributes">
+            <attribute name="t-if">isDebug</attribute>
+        </xpath>
+    </t>
+</templates>

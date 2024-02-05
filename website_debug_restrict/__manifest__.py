@@ -17,4 +17,9 @@
     "price": 10.00,
     "currency": "EUR",
     "category": "Website",
+    "assets": {
+        "web.assets_frontend": [
+            "website_debug_restrict/static/src/xml/error_dialog.xml",
+        ],
+    },
 }
