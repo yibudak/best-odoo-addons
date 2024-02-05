@@ -13,8 +13,9 @@
     "depends": ["web_translate_dialog"],
     "external_dependencies": {"python": ["requests"]},
     "data": [
-        "security/deepl_account.xml",
+        "security/security.xml",
         "views/deepl_account_view.xml",
+        "views/deepl_glossary_view.xml",
         "views/menus.xml",
         "views/res_company_view.xml",
         "views/res_lang_view.xml",

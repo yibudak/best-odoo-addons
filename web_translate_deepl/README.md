@@ -15,6 +15,7 @@ This module adds new features to web_translate_dialog module. It allows you to t
 
 - Translate all the languages with a single click.
 - Translate specific language.
+- Glossary support.
 - Set base field for translation. (e.g. use English for Japanese translation, use French for German translation etc.)
 - Use context and formality settings for translation.
 - Translate all kind of fields. (e.g. Char, Text, HTML, etc.)

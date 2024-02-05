@@ -2,6 +2,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 from odoo import models, api, fields, _
 from odoo.exceptions import UserError
+import io
+import csv
+import base64
 import requests
 
 
@@ -30,13 +33,63 @@ class DeepLAccount(models.Model):
         string="Formality",
         default="default",
     )
+    glossary_ids = fields.One2many(
+        "deepl.glossary",
+        "deepl_account_id",
+        string="Glossaries",
+    )
+    use_glossary = fields.Boolean(string="Use Glossary", default=True)
+
+    def action_update_glossaries(self):
+        def _delete_glossaries():
+            for glossary in self.glossary_ids.filtered(lambda g: g.deepl_id):
+                url = f"https://api.deepl.com/v2/glossaries/{glossary.deepl_id}"
+                headers = {
+                    "Authorization": f"DeepL-Auth-Key {self.auth_key}",
+                    "User-Agent": "Odoo/12.0",
+                }
+                requests.delete(url, headers=headers, timeout=10)
+                glossary.write({"deepl_id": False})
+
+        def _create_glossaries():
+            for glossary in self.glossary_ids:
+                # Convert base64 to csv
+                csv_file = io.StringIO(
+                    base64.b64decode(glossary.entries_csv_file).decode("utf-8")
+                )
+                reader = csv.reader(csv_file)
+                reader.__next__()  # Skip header
+                entries = list(reader)
+                entries_text = "\n".join("%s\t%s" % (x[0], x[1]) for x in entries)
+
+                url = "https://api.deepl.com/v2/glossaries"
+                headers = {
+                    "Authorization": f"DeepL-Auth-Key {self.auth_key}",
+                    "User-Agent": "Odoo/12.0",
+                }
+                data = {
+                    "name": glossary.name,
+                    "source_lang": glossary.source_lang_id.code.split("_")[0],
+                    "target_lang": glossary.target_lang_id.code.split("_")[0],
+                    "entries": entries_text,
+                    "entries_format": "tsv",
+                }
+                response = requests.post(url, json=data, headers=headers, timeout=10)
+                if response.status_code != 201:
+                    raise UserError(_("DeepL API Error: %s") % response.text)
+                glossary.write({"deepl_id": response.json().get("glossary_id")})
+
+        _delete_glossaries()
+        _create_glossaries()
+
+        return True
 
     def _translate(self, text, source_lang, target_lang):
         """
         Connect to DeepL API and translate the given text.
         :param text:
-        :param source_lang:
-        :param target_lang:
+        :param source_lang: Odoo language code e.g. en_US
+        :param target_lang: Odoo language code e.g. tr_TR
         :return:
         """
         self.ensure_one()
@@ -55,6 +108,17 @@ class DeepLAccount(models.Model):
 
         if self.translation_context:  # Add context
             data["context"] = self.translation_context
+
+        if self.use_glossary:  # Add glossary
+            glossary_id = fields.first(
+                self.glossary_ids.filtered(
+                    lambda g: g.source_lang_id.code == source_lang
+                    and g.target_lang_id.code == target_lang
+                    and g.deepl_id
+                )
+            )
+            if glossary_id:
+                data["glossary_id"] = glossary_id.deepl_id
 
         response = requests.post(url, data=data, headers=headers, timeout=10)
         if response.status_code != 200:

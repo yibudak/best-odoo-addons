@@ -7,7 +7,8 @@
         <field name="arch" type="xml">
             <form string="DeepL Account">
                 <header>
-                    <button name="action_test_connection" string="Test API" type="object" class="btn-primary" />
+                    <button name="action_update_glossaries" string="Update Glossaries" type="object" class="btn-primary" />
+                    <button name="action_test_connection" string="Test API" type="object" />
                 </header>
                 <sheet>
                     <group>
@@ -15,7 +16,19 @@
                         <field name="auth_key" />
                         <field name="formality" />
                         <field name="translation_context" />
+                        <field name="use_glossary" />
                     </group>
+                    <notebook>
+                        <page string="Glossaries">
+                            <span class="text-muted">
+                                1. Create a CSV file with the glossary entries. (source_lang, target_lang in the first row, then the entries)<br/>
+                                2. Upload the CSV file and select languages.<br/>
+                                3. Click on "Update Glossaries" to send the glossary to DeepL.<br/>
+                                4. If "Use Glossary" is checked, the glossary will be used for translations.
+                            </span>
+                            <field name="glossary_ids" context="{'default_deepl_account_id': active_id}"/>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
