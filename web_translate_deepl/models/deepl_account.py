@@ -43,41 +43,11 @@ class DeepLAccount(models.Model):
     def action_update_glossaries(self):
         def _delete_glossaries():
             for glossary in self.glossary_ids.filtered(lambda g: g.deepl_id):
-                url = f"https://api.deepl.com/v2/glossaries/{glossary.deepl_id}"
-                headers = {
-                    "Authorization": f"DeepL-Auth-Key {self.auth_key}",
-                    "User-Agent": "Odoo/12.0",
-                }
-                requests.delete(url, headers=headers, timeout=10)
-                glossary.write({"deepl_id": False})
+                glossary._api_delete_glossary(account=self)
 
         def _create_glossaries():
             for glossary in self.glossary_ids:
-                # Convert base64 to csv
-                csv_file = io.StringIO(
-                    base64.b64decode(glossary.entries_csv_file).decode("utf-8")
-                )
-                reader = csv.reader(csv_file)
-                reader.__next__()  # Skip header
-                entries = list(reader)
-                entries_text = "\n".join("%s\t%s" % (x[0], x[1]) for x in entries)
-
-                url = "https://api.deepl.com/v2/glossaries"
-                headers = {
-                    "Authorization": f"DeepL-Auth-Key {self.auth_key}",
-                    "User-Agent": "Odoo/12.0",
-                }
-                data = {
-                    "name": glossary.name,
-                    "source_lang": glossary.source_lang_id.code.split("_")[0],
-                    "target_lang": glossary.target_lang_id.code.split("_")[0],
-                    "entries": entries_text,
-                    "entries_format": "tsv",
-                }
-                response = requests.post(url, json=data, headers=headers, timeout=10)
-                if response.status_code != 201:
-                    raise UserError(_("DeepL API Error: %s") % response.text)
-                glossary.write({"deepl_id": response.json().get("glossary_id")})
+                glossary._api_create_glossary(account=self)
 
         _delete_glossaries()
         _create_glossaries()
