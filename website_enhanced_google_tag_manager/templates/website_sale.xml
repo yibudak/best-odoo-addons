@@ -57,7 +57,7 @@
         <xpath expr="//a[@id='add_to_cart']" position="attributes">
             <t t-if="website and website.google_tag_manager_key and website.ecommerce_conversion">
                 <attribute name="t-attf-onclick" separator=" "
-                           add="dataLayer.push({                         'event': 'addToCart',                         'currencyCode': '#{website.currency_id.name}',                         'add': {                           'products': [{                             'name': '#{product.name}',                             'id': '#{product.default_code if product.default_code else product.name}',                             'price': #{combination_info['price']},                             'category': '#{category.name if category else ''}',                             'quantity': 1                           }]                         }                       });"/>
+                           add="dataLayer.push({                         'event': 'add_to_cart',                         'currencyCode': '#{website.currency_id.name}',                         'add': {                           'products': [{                             'name': '#{product.name}',                             'id': '#{product.default_code if product.default_code else product.name}',                             'price': #{combination_info['price']},                             'category': '#{category.name if category else ''}',                             'quantity': 1                           }]                         }                       });"/>
             </t>
         </xpath>
     </template>
@@ -124,23 +124,24 @@
         </xpath>
     </template>
 
-    <template id="ecommerce_conversion_payment" inherit_id="website_sale.payment"
-          name="Payment Tag Manager">
-        <xpath expr="//div[@id='wrap']" position="after">
-            <t t-if="website and website.google_tag_manager_key and website.ecommerce_conversion">
-                <script>
-                    dataLayer.push({
-                    'event': 'checkoutOption',
-                    'ecommerce': {
-                    'checkout_option': {
-                    'actionField': {'step': 2, 'option': 'Collect Payment Info'}
-                    }
-                    }
-                    });
-                </script>
-            </t>
-        </xpath>
-    </template>
+<!-- checkoutOption is deprecated -->
+<!--    <template id="ecommerce_conversion_payment" inherit_id="website_sale.payment"-->
+<!--          name="Payment Tag Manager">-->
+<!--        <xpath expr="//div[@id='wrap']" position="after">-->
+<!--            <t t-if="website and website.google_tag_manager_key and website.ecommerce_conversion">-->
+<!--                <script>-->
+<!--                    dataLayer.push({-->
+<!--                    'event': 'checkoutOption',-->
+<!--                    'ecommerce': {-->
+<!--                    'checkout_option': {-->
+<!--                    'actionField': {'step': 2, 'option': 'Collect Payment Info'}-->
+<!--                    }-->
+<!--                    }-->
+<!--                    });-->
+<!--                </script>-->
+<!--            </t>-->
+<!--        </xpath>-->
+<!--    </template>-->
 
     <template id="ecommerce_conversion_sale_confirmation" inherit_id="website_sale.confirmation"
           name="Confirmation Tag Manager">
