@@ -2,9 +2,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-import csv
-import io
-import base64
 import requests
 
 
@@ -29,7 +26,11 @@ class DeepLGlossary(models.Model):
         string="Target Language",
         required=True,
     )
-    entries_csv_file = fields.Binary(string="Entries CSV File")
+    entry_ids = fields.One2many(
+        "deepl.glossary.entry",
+        "deepl_glossary_id",
+        string="Entries",
+    )
 
     @api.model
     def write(self, vals):
@@ -82,12 +83,9 @@ class DeepLGlossary(models.Model):
         :return:
         """
         self.ensure_one()
-        csv_file = io.StringIO(base64.b64decode(self.entries_csv_file).decode("utf-8"))
-        reader = csv.reader(csv_file)
-        reader.__next__()  # Skip header
-        entries = list(reader)
-        entries_text = "\n".join("%s\t%s" % (x[0], x[1]) for x in entries)
-
+        entries_text = "\n".join(
+            f"{entry.source_text}\t{entry.target_text}" for entry in self.entry_ids
+        )
         url = "https://api.deepl.com/v2/glossaries"
         headers = {
             "Authorization": f"DeepL-Auth-Key {account.auth_key}",
@@ -104,3 +102,23 @@ class DeepLGlossary(models.Model):
         if response.status_code != 201:
             raise UserError(_("DeepL API Error: %s") % response.text)
         self.write({"deepl_id": response.json().get("glossary_id")})
+
+
+class DeepLGlossaryEntry(models.Model):
+    _name = "deepl.glossary.entry"
+    _description = "DeepL Glossary Entry"
+
+    deepl_glossary_id = fields.Many2one(
+        "deepl.glossary",
+        string="Glossary",
+        readonly=True,
+    )
+    source_text = fields.Char(string="Source Text", required=True)
+    target_text = fields.Char(string="Target Text", required=True)
+    _sql_constraints = [
+        (
+            "source_text_uniq",
+            "unique (deepl_glossary_id, source_text)",
+            "Source text must be unique in a glossary.",
+        )
+    ]

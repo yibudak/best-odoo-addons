@@ -42,4 +42,24 @@
         <field name="perm_unlink" eval="1"/>
     </record>
 
+    <record model="ir.model.access" id="deepl_glossary_entry_access_all">
+        <field name="name">deepl.entry access all</field>
+        <field name="model_id" ref="model_deepl_glossary_entry"/>
+        <field name="group_id" ref="base.group_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record model="ir.model.access" id="deepl_glossary_entry_access_manager">
+        <field name="name">deepl.glossary.entry access manager</field>
+        <field name="model_id" ref="model_deepl_glossary_entry"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
 </odoo>
