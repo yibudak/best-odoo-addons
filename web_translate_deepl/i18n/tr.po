@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-03 13:51+0000\n"
-"PO-Revision-Date: 2024-02-03 13:51+0000\n"
+"POT-Creation-Date: 2024-02-05 09:15+0000\n"
+"PO-Revision-Date: 2024-02-05 09:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,17 +28,32 @@ msgstr ""
 
 #. module: web_translate_deepl
 #. openerp-web
-#: code:addons/web_translate_deepl/static/src/xml/inherit.xml:24
+#: code:addons/web_translate_deepl/static/src/xml/inherit.xml:23
 #, python-format
 msgid "#{lg.id}"
 msgstr ""
 
 #. module: web_translate_deepl
 #. openerp-web
-#: code:addons/web_translate_deepl/static/src/xml/inherit.xml:25
+#: code:addons/web_translate_deepl/static/src/xml/inherit.xml:24
 #, python-format
 msgid "#{lg.tr_base_lang_id[0] or ''}"
 msgstr ""
+
+#. module: web_translate_deepl
+#: model_terms:ir.ui.view,arch_db:web_translate_deepl.view_deepl_account_form
+msgid "<span class=\"text-muted\">\n"
+"                                1. Create a CSV file with the glossary entries. (source_lang, target_lang in the first row, then the entries)<br/>\n"
+"                                2. Upload the CSV file and select languages.<br/>\n"
+"                                3. Click on \"Update Glossaries\" to send the glossary to DeepL.<br/>\n"
+"                                4. If \"Use Glossary\" is checked, the glossary will be used for translations.\n"
+"                            </span>"
+msgstr "<span class=\"text-muted\">\n"
+"                                1. Terimlerin olduğu bir CSV dosyası oluşturun. (source_lang, target_lang başlık, sonrasında ise terim satırları)<br/>\n"
+"                                2. CSV dosyasını yükleyin ve dilleri seçin.<br/>\n"
+"                                3. \"Terimler Sözlüğünü Güncelle\" butonuna basarak terimleri DeepL'e gönderin.<br/>\n"
+"                                4. Eğer \"Terimler Sözlüğü Kullan\" seçiliyse, çevirilerde terimleriniz kullanılacaktır.\n"
+"                            </span>"
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__auth_key
@@ -51,7 +66,7 @@ msgid "Base Translate Language"
 msgstr "Çeviri Kaynak Dili"
 
 #. module: web_translate_deepl
-#: code:addons/web_translate_deepl/models/deepl_account.py:78
+#: code:addons/web_translate_deepl/models/deepl_account.py:142
 #, python-format
 msgid "Base language not found! Set translation base language for %s"
 msgstr "Kaynak dil bulunamadı! %s için çeviri kaynak dilini ayarlayın"
@@ -63,28 +78,32 @@ msgstr "Şirketler"
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__create_uid
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__create_uid
 msgid "Created by"
 msgstr "Oluşturan"
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__create_date
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__create_date
 msgid "Created on"
 msgstr "Oluşturulma"
 
 #. module: web_translate_deepl
-#: code:addons/web_translate_deepl/models/deepl_account.py:61
+#: code:addons/web_translate_deepl/models/deepl_account.py:79
+#: code:addons/web_translate_deepl/models/deepl_account.py:125
 #, python-format
 msgid "DeepL API Error: %s"
 msgstr "DeepL API Hatası: %s"
 
 #. module: web_translate_deepl
-#: code:addons/web_translate_deepl/models/deepl_account.py:114
+#: code:addons/web_translate_deepl/models/deepl_account.py:178
 #, python-format
 msgid "DeepL API Success: \"Hello World\" translation: %s"
 msgstr "DeepL API Başarılı: \"Hello World\" çevirisi: %s"
 
 #. module: web_translate_deepl
 #: model:ir.model,name:web_translate_deepl.model_deepl_account
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__deepl_account_id
 #: model:ir.model.fields,field_description:web_translate_deepl.field_res_company__deepl_account_id
 #: model_terms:ir.ui.view,arch_db:web_translate_deepl.view_deepl_account_form
 msgid "DeepL Account"
@@ -102,7 +121,18 @@ msgid "DeepL Config"
 msgstr "DeepL Ayarları"
 
 #. module: web_translate_deepl
-#: code:addons/web_translate_deepl/models/deepl_account.py:88
+#: model:ir.model,name:web_translate_deepl.model_deepl_glossary
+#: model_terms:ir.ui.view,arch_db:web_translate_deepl.view_deepl_glossary_form
+msgid "DeepL Glossary"
+msgstr "DeepL Terimler Sözlüğü"
+
+#. module: web_translate_deepl
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__deepl_id
+msgid "DeepL ID"
+msgstr ""
+
+#. module: web_translate_deepl
+#: code:addons/web_translate_deepl/models/deepl_account.py:152
 #, python-format
 msgid "DeepL account not found for this company!"
 msgstr "Bu şirket için DeepL hesabı bulunamadı!"
@@ -114,8 +144,14 @@ msgstr ""
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__display_name
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__display_name
 msgid "Display Name"
 msgstr "Görünüm Adı"
+
+#. module: web_translate_deepl
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__entries_csv_file
+msgid "Entries CSV File"
+msgstr "Terimler CSV Dosyası"
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__formality
@@ -123,7 +159,14 @@ msgid "Formality"
 msgstr "Resmiyet"
 
 #. module: web_translate_deepl
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__glossary_ids
+#: model_terms:ir.ui.view,arch_db:web_translate_deepl.view_deepl_account_form
+msgid "Glossaries"
+msgstr "Terimler Sözlüğü"
+
+#. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__id
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__id
 msgid "ID"
 msgstr ""
 
@@ -134,16 +177,19 @@ msgstr "Diller"
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account____last_update
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary____last_update
 msgid "Last Modified on"
 msgstr "Son Güncelleme"
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__write_uid
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__write_uid
 msgid "Last Updated by"
 msgstr "Son Güncelleyen"
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__write_date
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__write_date
 msgid "Last Updated on"
 msgstr "Son Güncelleme"
 
@@ -159,6 +205,7 @@ msgstr "Çok"
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__name
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__name
 msgid "Name"
 msgstr "İsim"
 
@@ -173,9 +220,19 @@ msgid "Prefer More"
 msgstr "Çok tercih et"
 
 #. module: web_translate_deepl
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__source_lang_id
+msgid "Source Language"
+msgstr "Kaynak Dil"
+
+#. module: web_translate_deepl
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__target_lang_id
+msgid "Target Language"
+msgstr "Hedef Dil"
+
+#. module: web_translate_deepl
 #: model_terms:ir.ui.view,arch_db:web_translate_deepl.view_deepl_account_form
 msgid "Test API"
-msgstr "Test API"
+msgstr "API Testi"
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,help:web_translate_deepl.field_res_lang__tr_base_lang_id
@@ -184,7 +241,7 @@ msgstr "DeepL API ile çevrilecek dil"
 
 #. module: web_translate_deepl
 #. openerp-web
-#: code:addons/web_translate_deepl/static/src/xml/inherit.xml:18
+#: code:addons/web_translate_deepl/static/src/xml/inherit.xml:17
 #, python-format
 msgid "Translate"
 msgstr "Çevir"
@@ -200,4 +257,14 @@ msgstr "Tümünü Çevir"
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__translation_context
 msgid "Translation Context"
 msgstr "Çeviri Bağlamı"
+
+#. module: web_translate_deepl
+#: model_terms:ir.ui.view,arch_db:web_translate_deepl.view_deepl_account_form
+msgid "Update Glossaries"
+msgstr "Terimler Sözlüğü Güncelle"
+
+#. module: web_translate_deepl
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__use_glossary
+msgid "Use Glossary"
+msgstr "Terimler Sözlüğü Kullan"
 
