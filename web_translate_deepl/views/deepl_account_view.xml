@@ -21,8 +21,8 @@
                     <notebook>
                         <page string="Glossaries">
                             <span class="text-muted">
-                                1. Create a CSV file with the glossary entries. (source_lang, target_lang in the first row, then the entries)<br/>
-                                2. Upload the CSV file and select languages.<br/>
+                                1. Create a glossary with source and target languages.<br/>
+                                2. Add entries to the created glossary.<br/>
                                 3. Click on "Update Glossaries" to send the glossary to DeepL.<br/>
                                 4. If "Use Glossary" is checked, the glossary will be used for translations.
                             </span>

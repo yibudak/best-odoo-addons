@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-05 09:15+0000\n"
-"PO-Revision-Date: 2024-02-05 09:15+0000\n"
+"POT-Creation-Date: 2024-02-05 10:57+0000\n"
+"PO-Revision-Date: 2024-02-05 10:57+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,8 +43,8 @@ msgstr ""
 #. module: web_translate_deepl
 #: model_terms:ir.ui.view,arch_db:web_translate_deepl.view_deepl_account_form
 msgid "<span class=\"text-muted\">\n"
-"                                1. Create a CSV file with the glossary entries. (source_lang, target_lang in the first row, then the entries)<br/>\n"
-"                                2. Upload the CSV file and select languages.<br/>\n"
+"                                1. Create a glossary with source and target languages.<br/>\n"
+"                                2. Add entries to the created glossary.<br/>\n"
 "                                3. Click on \"Update Glossaries\" to send the glossary to DeepL.<br/>\n"
 "                                4. If \"Use Glossary\" is checked, the glossary will be used for translations.\n"
 "                            </span>"
@@ -61,7 +61,7 @@ msgid "Base Translate Language"
 msgstr ""
 
 #. module: web_translate_deepl
-#: code:addons/web_translate_deepl/models/deepl_account.py:142
+#: code:addons/web_translate_deepl/models/deepl_account.py:112
 #, python-format
 msgid "Base language not found! Set translation base language for %s"
 msgstr ""
@@ -74,24 +74,26 @@ msgstr ""
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__create_uid
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__create_uid
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__create_date
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__create_date
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry__create_date
 msgid "Created on"
 msgstr ""
 
 #. module: web_translate_deepl
-#: code:addons/web_translate_deepl/models/deepl_account.py:79
-#: code:addons/web_translate_deepl/models/deepl_account.py:125
+#: code:addons/web_translate_deepl/models/deepl_account.py:95
+#: code:addons/web_translate_deepl/models/deepl_glossary.py:103
 #, python-format
 msgid "DeepL API Error: %s"
 msgstr ""
 
 #. module: web_translate_deepl
-#: code:addons/web_translate_deepl/models/deepl_account.py:178
+#: code:addons/web_translate_deepl/models/deepl_account.py:148
 #, python-format
 msgid "DeepL API Success: \"Hello World\" translation: %s"
 msgstr ""
@@ -122,12 +124,18 @@ msgid "DeepL Glossary"
 msgstr ""
 
 #. module: web_translate_deepl
+#: model:ir.model,name:web_translate_deepl.model_deepl_glossary_entry
+#: model_terms:ir.ui.view,arch_db:web_translate_deepl.view_deepl_glossary_entry_form
+msgid "DeepL Glossary Entry"
+msgstr ""
+
+#. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__deepl_id
 msgid "DeepL ID"
 msgstr ""
 
 #. module: web_translate_deepl
-#: code:addons/web_translate_deepl/models/deepl_account.py:152
+#: code:addons/web_translate_deepl/models/deepl_account.py:122
 #, python-format
 msgid "DeepL account not found for this company!"
 msgstr ""
@@ -140,12 +148,14 @@ msgstr ""
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__display_name
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__display_name
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: web_translate_deepl
-#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__entries_csv_file
-msgid "Entries CSV File"
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__entry_ids
+#: model_terms:ir.ui.view,arch_db:web_translate_deepl.view_deepl_glossary_form
+msgid "Entries"
 msgstr ""
 
 #. module: web_translate_deepl
@@ -160,8 +170,14 @@ msgid "Glossaries"
 msgstr ""
 
 #. module: web_translate_deepl
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry__deepl_glossary_id
+msgid "Glossary"
+msgstr ""
+
+#. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__id
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__id
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry__id
 msgid "ID"
 msgstr ""
 
@@ -173,18 +189,21 @@ msgstr ""
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account____last_update
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary____last_update
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__write_uid
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__write_uid
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_account__write_date
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__write_date
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -220,8 +239,23 @@ msgid "Source Language"
 msgstr ""
 
 #. module: web_translate_deepl
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry__source_text
+msgid "Source Text"
+msgstr ""
+
+#. module: web_translate_deepl
+#: sql_constraint:deepl.glossary.entry:0
+msgid "Source text must be unique in a glossary."
+msgstr ""
+
+#. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary__target_lang_id
 msgid "Target Language"
+msgstr ""
+
+#. module: web_translate_deepl
+#: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry__target_text
+msgid "Target Text"
 msgstr ""
 
 #. module: web_translate_deepl
