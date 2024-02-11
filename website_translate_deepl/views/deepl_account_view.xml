@@ -49,7 +49,7 @@
         <field name="name">DeepL Accounts</field>
         <field name="res_model">deepl.account</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="web_translate_deepl.view_deepl_account_tree" />
+        <field name="view_id" ref="website_translate_deepl.view_deepl_account_tree" />
     </record>
 
 </odoo>

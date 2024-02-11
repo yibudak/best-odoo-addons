@@ -62,4 +62,14 @@
         <field name="perm_unlink" eval="1"/>
     </record>
 
+    <record model="ir.model.access" id="deepl_website_translate_wizard_manager">
+        <field name="name">deepl.website.translate.wizard.manager</field>
+        <field name="model_id" ref="model_website_translate_wizard"/>
+        <field name="group_id" ref="website.group_website_designer"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
 </odoo>

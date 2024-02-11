@@ -54,12 +54,18 @@ class DeepLAccount(models.Model):
 
         return True
 
-    def _translate(self, text, source_lang, target_lang):
+    def translate(self, text, source_lang_code, target_lang_code):
+        """
+        Public method to translate the given text.
+        """
+        return self._translate(text, source_lang_code, target_lang_code)
+
+    def _translate(self, text, source_lang_code, target_lang_code):
         """
         Connect to DeepL API and translate the given text.
         :param text:
-        :param source_lang: Odoo language code e.g. en_US
-        :param target_lang: Odoo language code e.g. tr_TR
+        :param source_lang_code: Odoo language code e.g. en_US
+        :param target_lang_code: Odoo language code e.g. tr_TR
         :return:
         """
         self.ensure_one()
@@ -68,12 +74,14 @@ class DeepLAccount(models.Model):
             "Authorization": "DeepL-Auth-Key %s" % self.auth_key,
             "User-Agent": "Odoo/12.0",
         }
+        # Todo: Add support for multiple texts
         data = {
             "text": [text],
             # Convert Odoo's language code to DeepL's language code
-            "target_lang": target_lang.split("_")[0].upper(),
-            "source_lang": source_lang.split("_")[0].upper(),
+            "target_lang": target_lang_code.split("_")[0].upper(),
+            "source_lang": source_lang_code.split("_")[0].upper(),
             "formality": self.formality,
+            "tag_handling": "xml",  # since we're translating website elements
         }
 
         if self.translation_context:  # Add context
@@ -82,8 +90,8 @@ class DeepLAccount(models.Model):
         if self.use_glossary:  # Add glossary
             glossary_id = fields.first(
                 self.glossary_ids.filtered(
-                    lambda g: g.source_lang_id.code == source_lang
-                    and g.target_lang_id.code == target_lang
+                    lambda g: g.source_lang_id.code == source_lang_code
+                    and g.target_lang_id.code == target_lang_code
                     and g.deepl_id
                 )
             )
@@ -95,31 +103,31 @@ class DeepLAccount(models.Model):
             raise UserError(_("DeepL API Error: %s") % response.text)
         return response.json().get("translations")[0].get("text")
 
-    def rpc_translate(self, company_id, target_lang, text):
-        """
-        Translate the given text to the target language.
-        :param company_id: current company id
-        :param target_lang: language code to translate
-        :param text: text to translate
-        :return:
-        """
-        company_sudo = self.env["res.company"].sudo().browse(company_id)
-        if company_sudo and company_sudo.deepl_account_id:
-            target_lang_id = self.env["res.lang"].browse(target_lang)
-            base_lang_id = target_lang_id.tr_base_lang_id
-            if not base_lang_id:
-                raise UserError(
-                    _("Base language not found! Set translation base language for %s")
-                    % target_lang_id.display_name
-                )
-
-            return company_sudo.deepl_account_id._translate(
-                text,
-                base_lang_id.code,
-                target_lang_id.code,
-            )
-        else:
-            raise UserError(_("DeepL account not found for this company!"))
+    # def rpc_translate(self, company_id, target_lang, text):
+    #     """
+    #     Translate the given text to the target language.
+    #     :param company_id: current company id
+    #     :param target_lang: language code to translate
+    #     :param text: text to translate
+    #     :return:
+    #     """
+    #     company_sudo = self.env["res.company"].sudo().browse(company_id)
+    #     if company_sudo and company_sudo.deepl_account_id:
+    #         target_lang_id = self.env["res.lang"].browse(target_lang)
+    #         base_lang_id = target_lang_id.tr_base_lang_id
+    #         if not base_lang_id:
+    #             raise UserError(
+    #                 _("Base language not found! Set translation base language for %s")
+    #                 % target_lang_id.display_name
+    #             )
+    #
+    #         return company_sudo.deepl_account_id._translate(
+    #             text,
+    #             base_lang_id.code,
+    #             target_lang_id.code,
+    #         )
+    #     else:
+    #         raise UserError(_("DeepL account not found for this company!"))
 
     def rpc_get_current_company_lang(self):
         """

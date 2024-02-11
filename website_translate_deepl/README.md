@@ -7,7 +7,7 @@ You can purchase this module from Odoo Apps Store to support our work and mainte
 
 ![Odoo DeepL Translation](./static/description/usage.png)
 
-# Web DeepL Translate
+# Website DeepL Translate
 
 This module adds new features to web_translate_dialog module. It allows you to translate all the fields using DeepL API.
 

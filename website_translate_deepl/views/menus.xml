@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="menu_deepl_account"
+              name="DeepL Accounts"
+              action="website_translate_deepl.action_deepl_accounts"
+              sequence="4"
+              parent="website.menu_website_global_configuration"/>
+
+</odoo>
