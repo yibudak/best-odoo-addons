@@ -261,7 +261,7 @@ msgstr "Hedef Dil"
 #. module: web_translate_deepl
 #: model:ir.model.fields,field_description:web_translate_deepl.field_deepl_glossary_entry__target_text
 msgid "Target Text"
-msgstr "Heeef Metin"
+msgstr "Hedef Metin"
 
 #. module: web_translate_deepl
 #: model_terms:ir.ui.view,arch_db:web_translate_deepl.view_deepl_account_form

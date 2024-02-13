@@ -80,7 +80,7 @@ odoo.define('web_translate_deepl.web_translate_dialog_deepl', function (require)
                 inputType = "textarea"
             }
             var $currentInput = $btn.closest('tr').find(inputType);
-            if ($currentInput.val() && this.deepl_enabled) {
+            if (this.deepl_enabled) {
                 $btn.addClass('disabled');
                 this._translateDeepl($currentInput, inputType);
                 $btn.removeClass('disabled');
