@@ -44,22 +44,25 @@ class DeepLAccount(models.Model):
         def _delete_glossaries():
             for glossary in self.glossary_ids.filtered(lambda g: g.deepl_id):
                 glossary._api_delete_glossary(account=self)
+                self.env.cr.commit()
 
         def _create_glossaries():
             for glossary in self.glossary_ids:
                 glossary._api_create_glossary(account=self)
+                self.env.cr.commit()
 
         _delete_glossaries()
         _create_glossaries()
 
         return True
 
-    def _translate(self, text, source_lang, target_lang):
+    def _translate(self, text, source_lang, target_lang, field_type=None):
         """
         Connect to DeepL API and translate the given text.
         :param text:
         :param source_lang: Odoo language code e.g. en_US
         :param target_lang: Odoo language code e.g. tr_TR
+        :param field_type: field type to translate
         :return:
         """
         self.ensure_one()
@@ -79,6 +82,9 @@ class DeepLAccount(models.Model):
         if self.translation_context:  # Add context
             data["context"] = self.translation_context
 
+        if field_type == "html":
+            data["tag_handling"] = "xml"
+
         if self.use_glossary:  # Add glossary
             glossary_id = fields.first(
                 self.glossary_ids.filtered(
@@ -95,12 +101,13 @@ class DeepLAccount(models.Model):
             raise UserError(_("DeepL API Error: %s") % response.text)
         return response.json().get("translations")[0].get("text")
 
-    def rpc_translate(self, company_id, target_lang, text):
+    def rpc_translate(self, company_id, target_lang, text, field_type):
         """
         Translate the given text to the target language.
         :param company_id: current company id
         :param target_lang: language code to translate
         :param text: text to translate
+        :param field_type: field type to translate
         :return:
         """
         company_sudo = self.env["res.company"].sudo().browse(company_id)
@@ -117,6 +124,7 @@ class DeepLAccount(models.Model):
                 text,
                 base_lang_id.code,
                 target_lang_id.code,
+                field_type=field_type,
             )
         else:
             raise UserError(_("DeepL account not found for this company!"))

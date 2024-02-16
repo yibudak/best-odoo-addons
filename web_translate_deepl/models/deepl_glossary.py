@@ -84,7 +84,8 @@ class DeepLGlossary(models.Model):
         """
         self.ensure_one()
         entries_text = "\n".join(
-            f"{entry.source_text}\t{entry.target_text}" for entry in self.entry_ids
+            f"{entry.source_text.strip()}\t{entry.target_text.strip()}"
+            for entry in self.entry_ids
         )
         url = "https://api.deepl.com/v2/glossaries"
         headers = {

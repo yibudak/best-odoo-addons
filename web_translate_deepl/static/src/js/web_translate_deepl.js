@@ -76,18 +76,19 @@ odoo.define('web_translate_deepl.web_translate_dialog_deepl', function (require)
             var $btn = $(ev.currentTarget);
             let inputType = "input"
             // html and text fields are rendered as textarea
-            if (['html', 'text'].includes($btn.data('field-type'))) {
+            let fieldType = $btn.data('field-type');
+            if (['html', 'text'].includes(fieldType)) {
                 inputType = "textarea"
             }
             var $currentInput = $btn.closest('tr').find(inputType);
             if (this.deepl_enabled) {
                 $btn.addClass('disabled');
-                this._translateDeepl($currentInput, inputType);
+                this._translateDeepl($currentInput, inputType, fieldType);
                 $btn.removeClass('disabled');
             }
         },
 
-        _translateDeepl: function ($currentInput, inputType) {
+        _translateDeepl: function ($currentInput, inputType, fieldType) {
             /**
              * @param {Object} $currentInput - The jQuery object of the input field containing the text to be translated.
              * @param {String} inputType - The type of input field. Can be 'input' or 'textarea'
@@ -103,7 +104,7 @@ odoo.define('web_translate_deepl.web_translate_dialog_deepl', function (require)
             rpc.query({
                 model: 'deepl.account',
                 method: 'rpc_translate',
-                args: [false, this.company_id, target_lang, $source_input.val()],
+                args: [false, this.company_id, target_lang, $source_input.val(), fieldType],
             }).then(function (result) {
                 if (result) {
                     $currentInput.val(result);
