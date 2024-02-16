@@ -32,7 +32,7 @@ class DeepLGlossary(models.Model):
         string="Entries",
     )
 
-    @api.model
+    # @api.model
     def write(self, vals):
         """
         Reset deepl_id to False if any change is made.
