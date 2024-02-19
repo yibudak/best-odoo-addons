@@ -10,7 +10,7 @@
     "author": "Ahmet Yiğit Budak",
     "website": "https://github.com/yibudak/best-odoo-addons",
     "license": "AGPL-3",
-    "depends": ["website"],
+    "depends": ["website", "queue_job"],
     "external_dependencies": {"python": ["requests"]},
     "data": [
         "security/security.xml",

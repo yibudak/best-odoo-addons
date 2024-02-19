@@ -14,32 +14,12 @@ _SEO_FIELDS = [
 class WebsitePage(models.Model):
     _inherit = "website.page"
 
-    # record.website_meta_title and record.website_meta_description and record.website_meta_keywords
-    def remove_seo_translation(self, target_lang_id):
-        self.ensure_one()
-        for field in _SEO_FIELDS:
-            translations = self.get_field_translations(
-                field, langs={target_lang_id.code}
-            )[0]
-            if not translations:
-                continue
-
-            updated_fields = {target_lang_id.code: {}}
-            for translation in translations:
-                if translation["value"]:
-                    updated_fields[target_lang_id.code] = translation["source"]
-                else:  # Always reset with source language
-                    updated_fields[target_lang_id.code] = getattr(self, field)
-            if updated_fields[target_lang_id.code]:
-                self.update_field_translations(field, updated_fields)
-                self.env.cr.commit()
-        return True
-
     def deepl_translate_seo_fields(
         self,
         deepl_account_id,
         source_lang_id,
         target_lang_id,
+        translation_override=False,
     ):
         """
         Translate all fields of the view with DeepL API
@@ -57,7 +37,7 @@ class WebsitePage(models.Model):
 
             updated_fields = {target_lang_id.code: {}}
             for translation in translations:
-                if translation["value"]:
+                if translation["value"] and not translation_override:
                     continue
                 try:
                     source_text = translation["source"] or getattr(self, field)

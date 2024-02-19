@@ -18,6 +18,12 @@
                             class="oe_highlight"
                     />
                     <button
+                        string="Translate Website Menus"
+                        type="object"
+                        name="action_translate_menus"
+                        class="oe_highlight"
+                    />
+                    <button
                         string="Translate SEO Fields"
                         type="object"
                         name="action_translate_seo"

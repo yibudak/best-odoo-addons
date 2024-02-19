@@ -26,22 +26,18 @@ class WebsiteTranslateWizard(models.TransientModel):
     )
 
     def action_translate_seo(self):
-        raise NotImplementedError("This method is not implemented yet.")
         self.ensure_one()
-        if self.override_translations:
-            self._clear_seo_exist_translation()
-
         self._translate_all_seo()
         return {"type": "ir.actions.act_window_close"}
 
     def action_translate_content(self):
-        # self.action_website_translate()
         self.ensure_one()
-
-        if self.override_translations:
-            self._clear_content_exist_translation()
-
         self._translate_all_content()
+        return {"type": "ir.actions.act_window_close"}
+
+    def action_translate_menus(self):
+        self.ensure_one()
+        self._translate_all_menus()
         return {"type": "ir.actions.act_window_close"}
 
     # website.page functions
@@ -56,22 +52,16 @@ class WebsiteTranslateWizard(models.TransientModel):
             ]
         )
 
-    def _clear_seo_exist_translation(self):
-        pages = self._get_website_pages()
-        for page in pages:
-            page.with_context(
-                lang=self.website_id.default_lang_id.code
-            ).remove_seo_translation(target_lang_id=self.target_lang_id)
-
     def _translate_all_seo(self):
         pages = self._get_website_pages()
         for page in pages:
             page.with_context(
                 lang=self.website_id.default_lang_id.code
-            ).deepl_translate_seo_fields(
+            ).with_delay().deepl_translate_seo_fields(
                 deepl_account_id=self.website_id.deepl_account_id,
                 source_lang_id=self.website_id.default_lang_id,
                 target_lang_id=self.target_lang_id,
+                translation_override=self.override_translations,
             )
 
     # ir.ui.view functions
@@ -86,16 +76,31 @@ class WebsiteTranslateWizard(models.TransientModel):
             ]
         )
 
-    def _clear_content_exist_translation(self):
-        views = self._get_website_views()
-        for view in views:
-            view.remove_translation(target_lang_id=self.target_lang_id)
-
     def _translate_all_content(self):
         views = self._get_website_views()
         for view in views:
-            view.deepl_translate_all_fields(
+            view.with_delay().deepl_translate_all_fields(
                 deepl_account_id=self.website_id.deepl_account_id,
                 source_lang_id=self.website_id.default_lang_id,
                 target_lang_id=self.target_lang_id,
+                translation_override=self.override_translations,
+            )
+
+    # website.menu functions
+
+    def _get_website_menus(self):
+        return self.env["website.menu"].search(
+            [
+                ("website_id", "=", self.website_id.id),
+            ]
+        )
+
+    def _translate_all_menus(self):
+        menus = self._get_website_menus()
+        for menu in menus:
+            menu.with_delay().deepl_translate_menu(
+                deepl_account_id=self.website_id.deepl_account_id,
+                source_lang_id=self.website_id.default_lang_id,
+                target_lang_id=self.target_lang_id,
+                translation_override=self.override_translations,
             )
