@@ -71,7 +71,7 @@ class DeepLGlossary(models.Model):
         url = f"https://api.deepl.com/v2/glossaries/{self.deepl_id}"
         headers = {
             "Authorization": f"DeepL-Auth-Key {account.auth_key}",
-            "User-Agent": "Odoo/12.0",
+            "User-Agent": "Odoo/16.0",
         }
         requests.delete(url, headers=headers, timeout=10)
         self.write({"deepl_id": False})

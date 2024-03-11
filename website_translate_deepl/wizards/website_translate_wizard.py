@@ -48,6 +48,8 @@ class WebsiteTranslateWizard(models.TransientModel):
                 "|",
                 ("active", "=", False),
                 ("active", "=", True),
+                ("is_published", "=", True),
+                ("is_seo_optimized", "=", True),
                 ("website_id", "=", self.website_id.id),
             ]
         )
