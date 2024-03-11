@@ -1,0 +1,11 @@
+.oe-deepl-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.oe-deepl-btn:hover {
+  opacity: 1; // Make the button visible when the div is hovered
+}

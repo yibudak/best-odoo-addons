@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="website_deepl_form_inherit" model="ir.ui.view">
+        <field name="name">website.deepl.from.inherit</field>
+        <field name="model">website</field>
+        <field name="inherit_id" ref="website.view_website_form"/>
+        <field name="arch" type="xml">
+            <!-- Hide default language field. -->
+<!--            <xpath expr="//field[@name='language_ids']" position="replace"/>-->
+
+            <!-- Add DeepL language section -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Multilanguage" name="deepl_multilang">
+                    <group>
+                        <field name="deepl_account_id"/>
+                    </group>
+                    <group>
+                        <button string="Translate Website" type="object"
+                                name="action_translate_contents"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('deepl_account_id', '=', False)]}"/>
+                    </group>
+<!--                    <group>-->
+<!--                        <field name="language_ids">-->
+<!--                            <tree string="Languages" editable="bottom">-->
+<!--                                <button string="Translate" type="object"-->
+<!--                                        name="action_website_translate"-->
+<!--                                        class="oe_highlight"-->
+<!--                                        attrs="{'invisible': [('deepl_account_id', '=', False)]}"/>-->
+<!--                                <field name="name"/>-->
+<!--                                <field name="code"/>-->
+<!--                                <field name="tr_base_lang_id"/>-->
+<!--                            </tree>-->
+<!--                        </field>-->
+<!--                    </group>-->
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

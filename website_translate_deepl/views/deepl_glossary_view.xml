@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_deepl_glossary_form" model="ir.ui.view">
+        <field name="name">deepl.glossary.form</field>
+        <field name="model">deepl.glossary</field>
+        <field name="arch" type="xml">
+            <form string="DeepL Glossary">
+                <sheet>
+                    <group>
+                        <field name="source_lang_id" />
+                        <field name="target_lang_id" />
+                        <field name="deepl_account_id" readonly="1"/>
+                        <field name="deepl_id" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Entries">
+                            <field name="entry_ids" widget="one2many_list" context="{'default_deepl_glossary_id': active_id}">
+                                <tree string="Entries">
+                                    <field name="source_text" />
+                                    <field name="target_text" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_deepl_glossary_tree" model="ir.ui.view">
+        <field name="name">deepl.glossary.tree</field>
+        <field name="model">deepl.glossary</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="source_lang_id" />
+                <field name="target_lang_id" />
+                <field name="deepl_id" />
+<!--                <field name="deepl_account_id" readonly="1"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_deepl_glossary_entry_form" model="ir.ui.view">
+        <field name="name">deepl.glossary.entry.form</field>
+        <field name="model">deepl.glossary.entry</field>
+        <field name="arch" type="xml">
+            <form string="DeepL Glossary Entry">
+                <sheet>
+                    <group>
+                        <field name="deepl_glossary_id" readonly="1"/>
+                    </group>
+                    <group col="12">
+                        <field name="source_text" colspan="6"/>
+                        <field name="target_text" colspan="6"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
