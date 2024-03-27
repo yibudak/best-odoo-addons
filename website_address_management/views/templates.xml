@@ -159,4 +159,12 @@
 
 	</template>
 
+
+	<template id="portal_layout_inherit" inherit_id="portal.portal_layout">
+		<xpath expr="//div[hasclass('o_portal_my_details')]//a[@role='button']" position="attributes">
+			<attribute name="href">/my/address</attribute>
+		</xpath>
+	</template>
+
+
 </odoo>
