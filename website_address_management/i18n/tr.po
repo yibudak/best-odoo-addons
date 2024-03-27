@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-19 15:01+0000\n"
-"PO-Revision-Date: 2023-12-19 15:01+0000\n"
+"POT-Creation-Date: 2024-03-27 07:09+0000\n"
+"PO-Revision-Date: 2024-03-27 07:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -57,11 +57,6 @@ msgid "Address Management"
 msgstr "Adres Yönetimi"
 
 #. module: website_address_management
-#: model_terms:ir.ui.view,arch_db:website_address_management.portal_my_addresses
-msgid "My Addresses"
-msgstr "Adreslerim"
-
-#. module: website_address_management
 #. odoo-javascript
 #: code:addons/website_address_management/static/src/js/address_management.js:0
 #, python-format
@@ -76,7 +71,7 @@ msgstr "Fatura Adresi"
 #. module: website_address_management
 #: model:ir.model,name:website_address_management.model_res_partner
 msgid "Contact"
-msgstr "Müşteri"
+msgstr ""
 
 #. module: website_address_management
 #: model_terms:ir.ui.view,arch_db:website_address_management.address_kanban_inherit
@@ -85,6 +80,7 @@ msgstr "Adresi sil"
 
 #. module: website_address_management
 #: model_terms:ir.ui.view,arch_db:website_address_management.portal_breadcrumb_address_inherit
+#: model_terms:ir.ui.view,arch_db:website_address_management.portal_my_addresses
 msgid "My Addresses"
 msgstr "Adreslerim"
 
@@ -102,4 +98,4 @@ msgstr "Teslimat Adresleri"
 #. module: website_address_management
 #: model_terms:ir.ui.view,arch_db:website_address_management.my_addresses
 msgid "my_addresses"
-msgstr "my_addresses"
+msgstr "Adreslerim"
