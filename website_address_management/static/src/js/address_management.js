@@ -38,6 +38,19 @@ odoo.define('website_address_management.address_management', function (require) 
             },
         });
 
+    // Disable to change shipping address on 'address management page',
+    // It can cause the error when the user wants to edit the address,
+    // but it changes the delivery address on the cart page.
+    publicWidget.registry.websiteSaleCart.include({
+        _onClickChangeShipping: function (ev) {
+            let $address_management = $(ev.currentTarget).parent('div.one_kanban').find("input[name='address_management']");
+            if ($address_management.length && $address_management.val() === '1') {
+                return;
+            }
+            this._super.apply(this, arguments);
+        },
+    });
+
     return {
         WebsiteAddressManagement: publicWidget.registry.WebsiteAddressManagement,
     };
