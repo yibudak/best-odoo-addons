@@ -33,6 +33,7 @@
 									<t t-call="website_sale.address_kanban">
 										<t t-set="contact" t-value="partner_id"/>
 										<t t-set="readonly" t-value="True"/>
+										<t t-set="allow_edit" t-value="1"/>
 										<t t-set="address_management" t-value="True"/>
 									</t>
 								</div>
@@ -52,6 +53,7 @@
 											<t t-call="website_sale.address_kanban">
 												<t t-set="contact" t-value="ship"/>
 												<t t-set="readonly" t-value="True"/>
+												<t t-set="allow_edit" t-value="1"/>
 												<t t-set="address_management" t-value="True"/>
 											</t>
 										</div>
@@ -133,29 +135,26 @@
 	</template>
 
 	<template id="address_kanban_inherit" name="Address Kanban Inherit" inherit_id="website_sale.address_kanban">
-		<!-- Allow Edit on Everywhere -->
-		<xpath expr="//a[@t-if='allow_edit']" position="attributes">
-			<attribute name="t-if">1==1</attribute>
-		</xpath>
-
 		<!-- Add delete button -->
 		<xpath expr="//div[hasclass('card-body')]/a" position="after">
-			<t t-if="request.env.user.sudo().partner_id.id != contact.id and (website and not website.is_public_user())">
+			<t t-if="(request.env.user.sudo().partner_id.id != contact.id and (website and not website.is_public_user())) and (not readonly or address_management)">
 				<a href="#"
 				   class="a-delete btn btn-link float-end p-0 no-decoration mx-3"
 				   title="Delete this address">
-					<i class='fa fa-trash'/>
+					<i class='fa fa-trash'/> Delete
 				</a>
 			</t>
 		</xpath>
 
+		<!-- Add Edit label -->
+		<xpath expr="//div[hasclass('card-body')]/a" position="inside">
+			<span> Edit</span>
+		</xpath>
+
+		<!-- Add hidden input for address_management -->
 		<xpath expr="//input[@name='partner_id']" position="after">
 			<input t-if="address_management" type="hidden" name="address_management" t-att-value="1" />
 		</xpath>
-<!--		<xpath expr="//form" position="attributes">-->
-<!--			<attribute name="action"></attribute>-->
-<!--			<attribute name="t-att-action">"/my/address/manage" if address_management else "/shop/checkout"</attribute>-->
-<!--		</xpath>-->
 
 	</template>
 
@@ -166,5 +165,26 @@
 		</xpath>
 	</template>
 
+	<template id="address_on_payment_inherit" inherit_id="website_sale.address_on_payment">
+		<xpath expr="//div[hasclass('card')]" position="replace">
+			<div class="row" id="shipping_and_billing">
+				<div class="col-12 col-md-6 mt-3 mt-md-0">
+					<b>Billing Address: <a class="float-end no-decoration" href="/shop/checkout"><i class="fa fa-edit"/> Edit</a></b>
+					<t t-call="website_sale.address_kanban">
+						<t t-set="contact" t-value="order.partner_id"/>
+						<t t-set="readonly" t-value="True"/>
+					</t>
+				</div>
+
+				<div class="col-12 col-md-6 mt-3 mt-md-0">
+					<b>Shipping Address: <a class="float-end no-decoration" href="/shop/checkout"><i class="fa fa-edit"/> Edit</a></b>
+					<t t-call="website_sale.address_kanban">
+						<t t-set="contact" t-value="order.partner_shipping_id"/>
+						<t t-set="readonly" t-value="True"/>
+					</t>
+				</div>
+        </div>
+		</xpath>
+	</template>
 
 </odoo>

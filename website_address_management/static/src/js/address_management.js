@@ -5,6 +5,7 @@ odoo.define('website_address_management.address_management', function (require) 
     var publicWidget = require('web.public.widget');
     var VariantMixin = require('website_sale.VariantMixin');
     var wSaleUtils = require('website_sale.utils');
+    var WebsiteSale = require('website_sale.website_sale');
     const cartHandlerMixin = wSaleUtils.cartHandlerMixin;
     publicWidget.registry.WebsiteAddressManagement = publicWidget.Widget.extend(VariantMixin,
         cartHandlerMixin, {
